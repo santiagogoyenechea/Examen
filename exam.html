@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="1894.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    span.s1 {font: 12.0px Helvetica; color: #000000; -webkit-text-stroke: 0px #000000}
+    span.s2 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Examen&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-family: Arial, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>height: 100vh;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#timer {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>font-size: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>color: red;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>button {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>padding: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>margin: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>#upload-section {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="timer"&gt;01:00&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="upload-section"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button onclick="downloadFile()"&gt;Descargar Archivo&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;input type="file" id="fileInput" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button onclick="uploadFile()"&gt;Subir Archivo&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="message"&gt;¡Tiempo restante!&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var timeLeft = 1 * 60; // 1 minuto en segundos</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var timerElement = document.getElementById('timer');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var uploadSection = document.getElementById('upload-section');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var messageElement = document.getElementById('message');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var username = new URLSearchParams(window.location.search).get('username');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Temporizador</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var interval = setInterval(function() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var minutes = Math.floor(timeLeft / 60);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var seconds = timeLeft % 60;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>timerElement.textContent = (minutes &lt; 10 ? '0' : '') + minutes + ':' + (seconds &lt; 10 ? '0' : '') + seconds;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (timeLeft &lt;= 0) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>clearInterval(interval);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>timerElement.textContent = '00:00';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>messageElement.textContent = '¡El tiempo ha terminado!';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>uploadSection.style.display = 'none';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>timeLeft--;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}, 1000);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function downloadFile() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// Cambia la URL a la del archivo que deseas proporcionar para descargar</p>
+<p class="p1"><span class="Apple-converted-space">      </span>window.location.href = 'https://drive.google.com/drive/folders/1Xe0IpGPgr34GpF1-N1wSxNGgvPzJmUXl?usp=drive_link';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>function uploadFile() {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var fileInput = document.getElementById('fileInput');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var file = fileInput.files[0];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (file) {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>var formData = new FormData();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>formData.append('file', file);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>formData.append('username', username);</p>
+<p class="p2"><br></p>
+<p class="p3"><span class="s1"><span class="Apple-converted-space">        </span>fetch('</span><span class="s2">https://script.google.com/macros/s/AKfycbwHVKnYP1Sgl7heKkT97PiSy54eaihyGg2jbupfFMQXKGUaggUsEpMc-I_72mek1-uWdQ/exec</span><span class="s1">', {</span></p>
+<p class="p1"><span class="Apple-converted-space">          </span>method: 'POST',</p>
+<p class="p1"><span class="Apple-converted-space">          </span>body: formData</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}).then(response =&gt; response.json())</p>
+<p class="p1"><span class="Apple-converted-space">          </span>.then(data =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (data.success) {</p>
+<p class="p1"><span class="Apple-converted-space">              </span>alert('Archivo subido correctamente.');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">              </span>alert('Error al subir el archivo.');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">          </span>});</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>alert('Por favor, selecciona un archivo.');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
